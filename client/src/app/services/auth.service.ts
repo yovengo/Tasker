@@ -15,6 +15,7 @@ const httpAuth: AxiosInstance = axios.create({
 const authService = {
   register: async (payload: Auth): Promise<any> => {
     const { data } = await httpAuth.post('signUp', payload);
+    //fix any
     return data;
   },
   login: async ({ email, password }: Auth): Promise<any> => {
@@ -22,6 +23,7 @@ const authService = {
       email,
       password,
     });
+    //fix any
     return data;
   },
   refresh: async (): Promise<any> => {
@@ -29,6 +31,7 @@ const authService = {
       grant_type: 'refresh_token',
       refresh_token: localStorageService.getRefreshToken(),
     });
+    //fix any
     return data;
   },
 };
