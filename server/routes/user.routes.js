@@ -26,3 +26,5 @@ router.put('/task', auth, async (req, res) => {
     res.status(500).json({ message: 'An error has occurred on the server. Try later' });
   }
 });
+
+module.exports = router;
