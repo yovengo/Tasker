@@ -10,6 +10,8 @@ type Tokens = {
   expiresIn: number;
 };
 
+type LocalStorageFunc = string | null;
+
 export const setTokens = ({ refreshToken, accessToken, userId, expiresIn = 3600 }: Tokens) => {
   const expiresDate: number = new Date().getTime() + expiresIn * 1000;
   localStorage.setItem(USERID_KEY, userId);
@@ -18,19 +20,19 @@ export const setTokens = ({ refreshToken, accessToken, userId, expiresIn = 3600 
   localStorage.setItem(EXPIRES_KEY, String(expiresDate));
 };
 
-export const getAccessToken = (): string => {
+export const getAccessToken = (): LocalStorageFunc => {
   return localStorage.getItem(TOKEN_KEY);
 };
 
-export const getRefreshToken = (): string => {
+export const getRefreshToken = (): LocalStorageFunc => {
   return localStorage.getItem(REFRESH_KEY);
 };
 
-export const getTokenExpiresDate = (): string => {
+export const getTokenExpiresDate = (): LocalStorageFunc => {
   return localStorage.getItem(EXPIRES_KEY);
 };
 
-export const getUserId = (): string => {
+export const getUserId = (): LocalStorageFunc => {
   return localStorage.getItem(USERID_KEY);
 };
 
