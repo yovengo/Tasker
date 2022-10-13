@@ -1,12 +1,7 @@
 import axios, { AxiosInstance } from 'axios';
 import localStorageService from './localStorage.service';
 import config from '../config.json';
-
-type Auth = {
-  email: string;
-  name?: string;
-  password: string;
-};
+import { Auth } from '../types/types';
 
 const httpAuth: AxiosInstance = axios.create({
   baseURL: config.apiEndpoint + 'auth/',

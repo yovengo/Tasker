@@ -1,16 +1,9 @@
+import { LocalStorageFunc, Tokens } from '../types/types';
+
 const TOKEN_KEY: string = 'jwt-token';
 const REFRESH_KEY: string = 'jwt-refresh-token';
 const EXPIRES_KEY: string = 'jwt-expires';
 const USERID_KEY: string = 'user-local-id';
-
-type Tokens = {
-  refreshToken: string;
-  accessToken: string;
-  userId: string;
-  expiresIn: number;
-};
-
-type LocalStorageFunc = string | null;
 
 export const setTokens = ({ refreshToken, accessToken, userId, expiresIn = 3600 }: Tokens) => {
   const expiresDate: number = new Date().getTime() + expiresIn * 1000;
