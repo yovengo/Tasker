@@ -3,7 +3,8 @@ import userService from '../services/user.service';
 import authService from '../services/auth.service';
 import localStorageService from '../services/localStorage.service';
 import { generateAuthError } from '../utils/generateAuthError';
-import { Initial } from '../types/types';
+import { Initial, Tasks } from '../types/types';
+import { AppDispatch } from './createStore';
 
 const initialState: Initial = localStorageService.getAccessToken()
   ? {
@@ -75,5 +76,20 @@ const {
   authRequestFailed,
   authRequestSuccess,
 } = actions;
+
+const userUpdateRequested = createAction('users/userUpdateRequested');
+const userUpdateFailed = createAction('users/userUpdateFailed');
+
+export const updateUserData =
+  (payload: Tasks) =>
+  async (dispatch: AppDispatch): Promise<void> => {
+    dispatch(userUpdateRequested());
+    try {
+      const { content } = await userService.update(payload);
+      dispatch(userUpdated(content));
+    } catch (error) {
+      dispatch(userUpdateFailed());
+    }
+  };
 
 export default usersReducer;
