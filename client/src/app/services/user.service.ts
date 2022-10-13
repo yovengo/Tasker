@@ -1,5 +1,14 @@
 import httpService from './http.service';
 
+type UpdatePayload =
+  | {
+      _id: string;
+      status: 'todo' | 'inProgress' | 'done';
+      name: string;
+      description: string;
+    }[]
+  | [];
+
 const userEndpoint = 'user/';
 
 const userService = {
@@ -8,12 +17,7 @@ const userService = {
     //fix any
     return data;
   },
-  create: async (payload): Promise<any> => {
-    const { data } = await httpService.put(userEndpoint + payload._id, payload);
-    //fix any
-    return data;
-  },
-  update: async (payload): Promise<any> => {
+  update: async (payload: UpdatePayload): Promise<any> => {
     const { data } = await httpService.put(userEndpoint + 'task', payload);
     //fix any
     return data;
