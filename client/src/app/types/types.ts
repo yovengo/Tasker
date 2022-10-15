@@ -1,5 +1,5 @@
 // auth.service
-export type Auth = {
+export type AuthFunc = {
   email: string;
   name?: string;
   password: string;
