@@ -1,9 +1,9 @@
-import { createAction, createSlice } from '@reduxjs/toolkit';
+import { createAction, createSlice, PayloadAction } from '@reduxjs/toolkit';
 import userService from '../services/user.service';
 import authService from '../services/auth.service';
 import localStorageService from '../services/localStorage.service';
 import { generateAuthError } from '../utils/generateAuthError';
-import { Initial, Tasks } from '../types/types';
+import { AuthField, Initial, Normalized, Tasks, User } from '../types/types';
 import { AppDispatch } from './createStore';
 
 const initialState: Initial = localStorageService.getAccessToken()
@@ -29,26 +29,33 @@ const usersSlice = createSlice({
     usersRequested: (state) => {
       state.isLoading = true;
     },
-    usersReceived: (state, action) => {
+    usersReceived: (state, action: PayloadAction<Normalized>) => {
       state.entities = action.payload;
       state.isLoading = false;
     },
-    usersRequestFailed: (state, action) => {
+    usersRequestFailed: (state, action: PayloadAction<string>) => {
       state.error = action.payload;
       state.isLoading = false;
     },
-    authRequestSuccess: (state, action) => {
+    authRequestSuccess: (state, action: PayloadAction<AuthField>) => {
       state.auth = action.payload;
       state.isLoggedIn = true;
     },
-    authRequestFailed: (state, action) => {
+    authRequestFailed: (state, action: PayloadAction<string>) => {
       state.error = action.payload;
     },
-    userCreated: (state, action) => {
-      if (!Array.isArray(state.entities)) {
-        state.entities = [];
+    userCreated: (state, action: PayloadAction<User>) => {
+      if (!state.entities) {
+        state.entities = {
+          byId: {},
+          allIds: [],
+        };
       }
-      state.entities.push(action.payload);
+      state.entities.byId = {
+        ...state.entities.byId,
+        [action.payload._id]: action.payload,
+      };
+      state.entities.allIds.push(action.payload._id);
     },
     userLoggedOut: (state) => {
       state.entities = null;
@@ -58,8 +65,8 @@ const usersSlice = createSlice({
     authRequested: (state) => {
       state.error = null;
     },
-    userUpdated: (state, action) => {
-      state.entities = action.payload;
+    userUpdated: (state, action: PayloadAction<User>) => {
+      if (state.entities) state.entities.byId[action.payload._id] = action.payload;
     },
   },
 });

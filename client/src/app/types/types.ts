@@ -25,18 +25,26 @@ export type Tasks =
     }[]
   | [];
 
+export type User = {
+  _id: string;
+  name: string;
+  email: string;
+  password: string;
+  tasks: Tasks;
+};
+
 // usersReducer
 export type Initial = {
-  entities:
-    | null
-    | {
-        name: string;
-        email: string;
-        password: string;
-        tasks: Tasks;
-      }[];
+  entities: null | Normalized;
   isLoading: boolean;
   error: null | string;
-  auth: null | { userId: LocalStorageFunc };
+  auth: AuthField;
   isLoggedIn: boolean;
 };
+
+export type Normalized = {
+  byId: Record<string, User>;
+  allIds: string[];
+};
+
+export type AuthField = null | { userId: LocalStorageFunc };
