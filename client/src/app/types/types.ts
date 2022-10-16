@@ -48,3 +48,5 @@ export type Normalized = {
 };
 
 export type AuthField = null | { userId: LocalStorageFunc };
+
+export type ActionError = { code: number; message: string };

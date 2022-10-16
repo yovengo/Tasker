@@ -3,8 +3,9 @@ import userService from '../services/user.service';
 import authService from '../services/auth.service';
 import localStorageService from '../services/localStorage.service';
 import { generateAuthError } from '../utils/generateAuthError';
-import { AuthField, Initial, Normalized, Tasks, User } from '../types/types';
+import { ActionError, AuthField, Initial, Normalized, Tasks, Tokens, User } from '../types/types';
 import { AppDispatch } from './createStore';
+import { useNavigate } from 'react-router-dom';
 
 const initialState: Initial = localStorageService.getAccessToken()
   ? {
@@ -21,6 +22,7 @@ const initialState: Initial = localStorageService.getAccessToken()
       auth: null,
       isLoggedIn: false,
     };
+const navigate = useNavigate();
 
 const usersSlice = createSlice({
   name: 'users',
@@ -86,6 +88,20 @@ const {
 
 const userUpdateRequested = createAction('users/userUpdateRequested');
 const userUpdateFailed = createAction('users/userUpdateFailed');
+
+export const signUp =
+  (payload: User) =>
+  async (dispatch: AppDispatch): Promise<void> => {
+    dispatch(authRequested());
+    try {
+      const data: Tokens = await authService.register(payload);
+      localStorageService.setTokens(data);
+      dispatch(authRequestSuccess({ userId: data.userId }));
+      navigate('/');
+    } catch (error) {
+      if (error instanceof Error) dispatch(authRequestFailed(error.message));
+    }
+  };
 
 export const updateUserData =
   (payload: Tasks) =>
