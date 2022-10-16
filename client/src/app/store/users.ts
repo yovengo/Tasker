@@ -67,7 +67,7 @@ const usersSlice = createSlice({
     authRequested: (state) => {
       state.error = null;
     },
-    userUpdated: (state, action: PayloadAction<User>) => {
+    userUpdateSucceed: (state, action: PayloadAction<User>) => {
       if (state.entities) state.entities.byId[action.payload._id] = action.payload;
     },
   },
@@ -79,7 +79,7 @@ const {
   usersReceived,
   usersRequestFailed,
   userCreated,
-  userUpdated,
+  userUpdateSucceed,
   userLoggedOut,
   authRequested,
   authRequestFailed,
@@ -94,7 +94,7 @@ export const signUp =
   async (dispatch: AppDispatch): Promise<void> => {
     dispatch(authRequested());
     try {
-      const data: Tokens = await authService.register(payload);
+      const data: Awaited<Tokens> = await authService.register(payload);
       localStorageService.setTokens(data);
       dispatch(authRequestSuccess({ userId: data.userId }));
       navigate('/');
@@ -103,13 +103,14 @@ export const signUp =
     }
   };
 
-export const updateUserData =
-  (payload: Tasks) =>
+export const updateUser =
+  (payload: Partial<User>) =>
   async (dispatch: AppDispatch): Promise<void> => {
     dispatch(userUpdateRequested());
     try {
       const { content } = await userService.update(payload);
-      dispatch(userUpdated(content));
+      dispatch(userUpdateSucceed(content));
+      navigate('/');
     } catch (error) {
       dispatch(userUpdateFailed());
     }

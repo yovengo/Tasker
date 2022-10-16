@@ -1,5 +1,6 @@
 import httpService from './http.service';
-import { Tasks } from '../types/types';
+import { User } from '../types/types';
+import localStorageService from './localStorage.service';
 
 const userEndpoint = 'user/';
 
@@ -9,8 +10,11 @@ const userService = {
     //fix any
     return data;
   },
-  update: async (payload: Tasks): Promise<any> => {
-    const { data } = await httpService.put(userEndpoint + 'task', payload);
+  update: async (payload: Partial<User>): Promise<any> => {
+    const { data } = await httpService.patch(
+      userEndpoint + localStorageService.getUserId(),
+      payload
+    );
     //fix any
     return data;
   },
