@@ -13,12 +13,13 @@ router.get('/', auth, async (req, res) => {
   }
 });
 
-router.put('/task', auth, async (req, res) => {
+router.patch('/:userId', auth, async (req, res) => {
   try {
-    const userId = req.user._id;
-    if (userId) {
-      const updatedUserTask = await User.findByIdAndUpdate(userId, req.body, { new: true });
-      res.send(updatedUserTask);
+    const { userId } = req.params;
+
+    if (userId === req.user._id) {
+      const updatedUser = await User.findByIdAndUpdate(userId, req.body, { new: true });
+      res.send(updatedUser);
     } else {
       res.status(401).json({ message: 'Unauthorized' });
     }
