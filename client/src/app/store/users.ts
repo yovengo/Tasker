@@ -1,12 +1,17 @@
+// Redux
 import { createAction, createSlice, PayloadAction } from '@reduxjs/toolkit';
+import { AppDispatch, RootState } from './createStore';
+// Libraries
+import axios from 'axios';
+import { useNavigate } from 'react-router-dom';
+// Services
 import userService from '../services/user.service';
 import authService from '../services/auth.service';
 import localStorageService from '../services/localStorage.service';
-import { generateAuthError } from '../utils/generateAuthError';
+// Types
 import { AuthField, ErrorFields, Initial, Normalized, Tokens, User } from '../types/types';
-import { AppDispatch } from './createStore';
-import { useNavigate } from 'react-router-dom';
-import axios from 'axios';
+// Utils
+import { generateAuthError } from '../utils/generateAuthError';
 import { normalizeData } from '../utils/normalizeData';
 
 const initialState: Initial = localStorageService.getAccessToken()
@@ -48,19 +53,6 @@ const usersSlice = createSlice({
     authRequestFailed: (state, action: PayloadAction<string>) => {
       state.error = action.payload;
     },
-    userCreated: (state, action: PayloadAction<User>) => {
-      if (!state.entities) {
-        state.entities = {
-          byId: {},
-          allIds: [],
-        };
-      }
-      state.entities.byId = {
-        ...state.entities.byId,
-        [action.payload._id]: action.payload,
-      };
-      state.entities.allIds.push(action.payload._id);
-    },
     userLoggedOut: (state) => {
       state.entities = null;
       state.isLoggedIn = false;
@@ -80,7 +72,6 @@ const {
   usersRequested,
   usersReceived,
   usersRequestFailed,
-  userCreated,
   userUpdateSucceed,
   userLoggedOut,
   authRequested,
@@ -157,5 +148,10 @@ export const loadUsersList = () => async (dispatch: AppDispatch) => {
     if (axios.isAxiosError(error)) dispatch(usersRequestFailed(error.message));
   }
 };
+
+export const getCurrentUser = () => (state: RootState) => state.users.entities;
+export const getUsersLoadingStatus = () => (state: RootState) => state.users.isLoading;
+export const getIsLoggedIn = () => (state: RootState) => state.users.isLoggedIn;
+export const getAuthError = () => (state: RootState) => state.users.error;
 
 export default usersReducer;
