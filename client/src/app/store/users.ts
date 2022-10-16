@@ -150,4 +150,10 @@ export const updateUser =
     }
   };
 
+export const logOut = () => (dispatch: AppDispatch) => {
+  localStorageService.removeAuthData();
+  dispatch(userLoggedOut());
+  navigate('/');
+};
+
 export default usersReducer;
