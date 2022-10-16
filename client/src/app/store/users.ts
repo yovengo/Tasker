@@ -3,20 +3,11 @@ import userService from '../services/user.service';
 import authService from '../services/auth.service';
 import localStorageService from '../services/localStorage.service';
 import { generateAuthError } from '../utils/generateAuthError';
-import {
-  ActionError,
-  AuthField,
-  ErrorFields,
-  Initial,
-  Normalized,
-  Tasks,
-  Tokens,
-  User,
-} from '../types/types';
+import { AuthField, ErrorFields, Initial, Normalized, Tokens, User } from '../types/types';
 import { AppDispatch } from './createStore';
 import { useNavigate } from 'react-router-dom';
-import { m } from 'framer-motion';
-import axios, { AxiosError } from 'axios';
+import axios from 'axios';
+import { normalizeData } from '../utils/normalizeData';
 
 const initialState: Initial = localStorageService.getAccessToken()
   ? {
@@ -154,6 +145,17 @@ export const logOut = () => (dispatch: AppDispatch) => {
   localStorageService.removeAuthData();
   dispatch(userLoggedOut());
   navigate('/');
+};
+
+export const loadUsersList = () => async (dispatch: AppDispatch) => {
+  dispatch(usersRequested());
+  try {
+    const { content } = await userService.get();
+    const normalizedContent = normalizeData(content);
+    dispatch(usersReceived(normalizedContent));
+  } catch (error) {
+    if (axios.isAxiosError(error)) dispatch(usersRequestFailed(error.message));
+  }
 };
 
 export default usersReducer;
