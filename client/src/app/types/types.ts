@@ -1,7 +1,7 @@
 // auth.service
 export type AuthFunc = {
   email: string;
-  name?: string;
+  name: string;
   password: string;
 };
 
@@ -50,3 +50,5 @@ export type Normalized = {
 export type AuthField = null | { userId: LocalStorageFunc };
 
 export type ActionError = { code: number; message: string };
+
+export type ErrorFields = { code: number; message: string };

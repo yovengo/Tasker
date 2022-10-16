@@ -13,7 +13,7 @@ const authService = {
     //fix any
     return data;
   },
-  login: async ({ email, password }: AuthFunc): Promise<any> => {
+  login: async ({ email, password }: Partial<AuthFunc>): Promise<any> => {
     const { data } = await httpAuth.post('signInWithPassword', {
       email,
       password,

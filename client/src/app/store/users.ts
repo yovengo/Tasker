@@ -3,9 +3,20 @@ import userService from '../services/user.service';
 import authService from '../services/auth.service';
 import localStorageService from '../services/localStorage.service';
 import { generateAuthError } from '../utils/generateAuthError';
-import { ActionError, AuthField, Initial, Normalized, Tasks, Tokens, User } from '../types/types';
+import {
+  ActionError,
+  AuthField,
+  ErrorFields,
+  Initial,
+  Normalized,
+  Tasks,
+  Tokens,
+  User,
+} from '../types/types';
 import { AppDispatch } from './createStore';
 import { useNavigate } from 'react-router-dom';
+import { m } from 'framer-motion';
+import axios, { AxiosError } from 'axios';
 
 const initialState: Initial = localStorageService.getAccessToken()
   ? {
@@ -99,7 +110,30 @@ export const signUp =
       dispatch(authRequestSuccess({ userId: data.userId }));
       navigate('/');
     } catch (error) {
-      if (error instanceof Error) dispatch(authRequestFailed(error.message));
+      if (axios.isAxiosError(error)) dispatch(authRequestFailed(error.message));
+    }
+  };
+
+export const signIn =
+  (payload: Partial<User>) =>
+  async (dispatch: AppDispatch): Promise<void> => {
+    const { email, password } = payload;
+    dispatch(authRequested());
+    try {
+      const data: Awaited<Tokens> = await authService.login({ email, password });
+      localStorageService.setTokens(data);
+      dispatch(authRequestSuccess({ userId: data.userId }));
+      navigate('/');
+    } catch (error) {
+      if (axios.isAxiosError(error)) {
+        const { code, message }: ErrorFields = error.response?.data.error;
+        if (code === 400) {
+          const errorMessage = generateAuthError(message);
+          dispatch(authRequestFailed(errorMessage));
+        } else {
+          dispatch(authRequestFailed(error.message));
+        }
+      }
     }
   };
 
@@ -112,7 +146,7 @@ export const updateUser =
       dispatch(userUpdateSucceed(content));
       navigate('/');
     } catch (error) {
-      dispatch(userUpdateFailed());
+      if (axios.isAxiosError(error)) dispatch(userUpdateFailed());
     }
   };
 
