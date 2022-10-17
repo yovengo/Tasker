@@ -12,14 +12,6 @@ const schema = new Schema(
       unique: true,
     },
     password: { type: String },
-    tasks: [
-      {
-        _id: String,
-        status: { type: String, enum: ['todo', 'inProgress', 'done'] },
-        name: String,
-        description: String,
-      },
-    ],
   },
   { timestamps: true }
 );

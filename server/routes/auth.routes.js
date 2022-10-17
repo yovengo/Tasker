@@ -38,7 +38,6 @@ router.post('signUp', [
       const newUser = await User.create({
         ...req.body,
         password: hashedPassword,
-        tasks: [],
       });
 
       const tokens = tokenService.generate({ _id: newUser._id });
