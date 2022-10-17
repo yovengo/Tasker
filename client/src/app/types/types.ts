@@ -33,6 +33,9 @@ export type User = {
   tasks: Tasks;
 };
 
+export type ResName = 'content';
+
+export type ServicePromise<T> = Record<ResName, T>;
 // usersReducer
 export type Initial = {
   entities: null | Normalized;
@@ -48,7 +51,5 @@ export type Normalized = {
 };
 
 export type AuthField = null | { userId: LocalStorageFunc };
-
-export type ActionError = { code: number; message: string };
 
 export type ErrorFields = { code: number; message: string };
