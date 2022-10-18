@@ -1,6 +1,6 @@
 // services
 export type User = {
-  _id?: string;
+  _id: string;
   email: string;
   name: string;
   password: string;
@@ -14,7 +14,7 @@ export type Tokens = {
 };
 
 export type Task = {
-  _id?: string;
+  _id: string;
   name: string;
   description: string;
   status: 'todo' | 'inProgress' | 'done';
