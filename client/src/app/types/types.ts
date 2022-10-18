@@ -1,29 +1,17 @@
-// auth.service
-export type AuthFunc = {
+// services
+export type User = {
+  _id?: string;
   email: string;
   name: string;
   password: string;
 };
 
-// localStorage.service
 export type Tokens = {
   refreshToken: string;
   accessToken: string;
   userId: string;
   expiresIn: number;
 };
-
-export type LocalStorageFunc = string | null;
-
-// user.service
-export type Tasks =
-  | {
-      _id: string;
-      status: 'todo' | 'inProgress' | 'done';
-      name: string;
-      description: string;
-    }[]
-  | [];
 
 export type Task = {
   _id?: string;
@@ -33,21 +21,15 @@ export type Task = {
   userId: string;
 };
 
-export type User = {
-  _id: string;
-  name: string;
-  email: string;
-  password: string;
-};
+export type LocalStorageFunc = string | null;
 
-export type ResName = 'content';
+export type ServicePromise<T> = Record<'content', T>;
 
-export type ServicePromise<T> = Record<ResName, T>;
 // usersReducer
 export type Initial = {
-  entities: null | Normalized;
+  entities: Normalized | null;
   isLoading: boolean;
-  error: null | string;
+  error: string | null;
   auth: AuthField;
   isLoggedIn: boolean;
 };
@@ -57,6 +39,6 @@ export type Normalized = {
   allIds: string[];
 };
 
-export type AuthField = null | { userId: LocalStorageFunc };
+export type AuthField = { userId: LocalStorageFunc } | null;
 
 export type ErrorFields = { code: number; message: string };
