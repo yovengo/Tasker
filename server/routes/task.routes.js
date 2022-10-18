@@ -26,20 +26,37 @@ router
     }
   });
 
-router.delete('/:taskId', auth, async (req, res) => {
-  try {
-    const { taskId } = req.params;
-    const removedTask = await Task.findById(taskId);
+router
+  .route(':taskId')
+  .delete(auth, async (req, res) => {
+    try {
+      const { taskId } = req.params;
+      const removedTask = await Task.findById(taskId);
 
-    if (removedTask.userId.toString() === req.user._id) {
-      await removedTask.remove();
-      return res.send(null);
-    } else {
-      res.status(401).json({ message: 'Unauthorized' });
+      if (removedTask.userId.toString() === req.user._id) {
+        await removedTask.remove();
+        return res.send(null);
+      } else {
+        res.status(401).json({ message: 'Unauthorized' });
+      }
+    } catch (error) {
+      res.status(500).json({ message: 'An error has occurred on the server. Try later' });
     }
-  } catch (error) {
-    res.status(500).json({ message: 'An error has occurred on the server. Try later' });
-  }
-});
+  })
+  .patch(auth, async (req, res) => {
+    try {
+      const { taskId } = req.params;
+      const task = await Task.findById(taskId);
+
+      if (task.userId.toString() === req.user._id) {
+        const updatedTask = await Task.findByIdAndUpdate(taskId, req.body, { new: true });
+        return res.send(updatedTask);
+      } else {
+        res.status(401).json({ message: 'Unauthorized' });
+      }
+    } catch (error) {
+      res.status(500).json({ message: 'An error has occurred on the server. Try later' });
+    }
+  });
 
 module.exports = router;
