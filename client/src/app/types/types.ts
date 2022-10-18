@@ -25,12 +25,19 @@ export type Tasks =
     }[]
   | [];
 
+export type Task = {
+  _id?: string;
+  name: string;
+  description: string;
+  status: 'todo' | 'inProgress' | 'done';
+  userId: string;
+};
+
 export type User = {
   _id: string;
   name: string;
   email: string;
   password: string;
-  tasks: Tasks;
 };
 
 export type ResName = 'content';
