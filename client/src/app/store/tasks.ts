@@ -1,5 +1,9 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { Normalized, Task, TasksInitial } from '../types/types';
+import { AppDispatch } from './createStore';
+import axios from 'axios';
+import taskService from '../services/task.service';
+import { normalizeData } from '../utils/normalizeData';
 
 const initialState: TasksInitial = {
   entities: null,
@@ -49,5 +53,16 @@ const tasksSlice = createSlice({
 
 const { reducer: tasksReducer, actions } = tasksSlice;
 const { tasksRequested, tasksReceived, tasksRequestFailed, taskCreated, taskRemoved } = actions;
+
+export const loadTasksList = (userId: string) => async (dispatch: AppDispatch) => {
+  dispatch(tasksRequested());
+  try {
+    const { content } = await taskService.getTasks(userId);
+    const normalizedContent = normalizeData<Task>(content);
+    dispatch(tasksReceived(normalizedContent));
+  } catch (error) {
+    if (axios.isAxiosError(error)) dispatch(tasksRequestFailed(error.message));
+  }
+};
 
 export default tasksReducer;

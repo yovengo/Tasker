@@ -142,7 +142,7 @@ export const loadUsersList = () => async (dispatch: AppDispatch) => {
   dispatch(usersRequested());
   try {
     const { content } = await userService.get();
-    const normalizedContent = normalizeData(content);
+    const normalizedContent = normalizeData<User>(content);
     dispatch(usersReceived(normalizedContent));
   } catch (error) {
     if (axios.isAxiosError(error)) dispatch(usersRequestFailed(error.message));

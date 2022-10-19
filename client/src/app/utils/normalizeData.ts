@@ -1,7 +1,7 @@
-import { Normalized, User } from '../types/types';
+import { Normalized } from '../types/types';
 
-export const normalizeData = (nonNormalizedData: User[]) => {
-  const normalized: Normalized = {
+export const normalizeData = <T extends { _id: string }>(nonNormalizedData: T[]) => {
+  const normalized: Normalized<T> = {
     byId: {},
     allIds: [],
   };

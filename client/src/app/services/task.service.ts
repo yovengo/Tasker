@@ -8,8 +8,13 @@ const taskService = {
     const { data } = await httpService.post(taskEndpoint, payload);
     return data;
   },
-  getTasks: async (): Promise<ServicePromise<Task[]>> => {
-    const { data } = await httpService.get(taskEndpoint);
+  getTasks: async (userId: string): Promise<ServicePromise<Task[]>> => {
+    const { data } = await httpService.get(taskEndpoint, {
+      params: {
+        orderBy: 'userId',
+        equalTo: `${userId}`,
+      },
+    });
     return data;
   },
   updateTask: async (payload: Task): Promise<ServicePromise<Task>> => {
