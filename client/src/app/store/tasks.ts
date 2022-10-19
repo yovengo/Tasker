@@ -1,8 +1,13 @@
+// Redux
 import { createAction, createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { Normalized, Task, TasksInitial } from '../types/types';
 import { AppDispatch, RootState } from './createStore';
+// Libraries
 import axios from 'axios';
+// Services
 import taskService from '../services/task.service';
+// Types
+import { Normalized, Task, TasksInitial } from '../types/types';
+// Utils
 import { normalizeData } from '../utils/normalizeData';
 
 const initialState: TasksInitial = {
