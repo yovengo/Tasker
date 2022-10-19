@@ -1,4 +1,4 @@
-import { createSlice, PayloadAction } from '@reduxjs/toolkit';
+import { createAction, createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { Normalized, Task, TasksInitial } from '../types/types';
 import { AppDispatch } from './createStore';
 import axios from 'axios';
@@ -54,6 +54,9 @@ const tasksSlice = createSlice({
 const { reducer: tasksReducer, actions } = tasksSlice;
 const { tasksRequested, tasksReceived, tasksRequestFailed, taskCreated, taskRemoved } = actions;
 
+const addTaskRequested = createAction('tasks/addTaskRequested');
+const removeTaskRequested = createAction('tasks/removeTaskRequested');
+
 export const loadTasksList = (userId: string) => async (dispatch: AppDispatch) => {
   dispatch(tasksRequested());
   try {
@@ -62,6 +65,16 @@ export const loadTasksList = (userId: string) => async (dispatch: AppDispatch) =
     dispatch(tasksReceived(normalizedContent));
   } catch (error) {
     if (axios.isAxiosError(error)) dispatch(tasksRequestFailed(error.message));
+  }
+};
+
+export const createTask = (payload: Partial<Task>) => async (dispatch: AppDispatch) => {
+  dispatch(addTaskRequested());
+  try {
+    const { content } = await taskService.createTask(payload);
+    dispatch(taskCreated(content));
+  } catch (error) {
+    dispatch(removeTaskRequested());
   }
 };
 

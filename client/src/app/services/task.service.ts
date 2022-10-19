@@ -4,7 +4,7 @@ import { ServicePromise, Task } from '../types/types';
 const taskEndpoint = 'task/';
 
 const taskService = {
-  createTask: async (payload: Task): Promise<ServicePromise<Task>> => {
+  createTask: async (payload: Partial<Task>): Promise<ServicePromise<Task>> => {
     const { data } = await httpService.post(taskEndpoint, payload);
     return data;
   },
