@@ -1,6 +1,6 @@
 import { createAction, createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { Normalized, Task, TasksInitial } from '../types/types';
-import { AppDispatch } from './createStore';
+import { AppDispatch, RootState } from './createStore';
 import axios from 'axios';
 import taskService from '../services/task.service';
 import { normalizeData } from '../utils/normalizeData';
@@ -107,5 +107,8 @@ export const removeTask = (taskId: string) => async (dispatch: AppDispatch) => {
     if (axios.isAxiosError(error)) dispatch(tasksRequestFailed(error.message));
   }
 };
+
+export const getTasks = () => (state: RootState) => state.tasks.entities;
+export const getTasksLoadingStatus = () => (state: RootState) => state.tasks.isLoading;
 
 export default tasksReducer;
