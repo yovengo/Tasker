@@ -9,12 +9,12 @@ import userService from '../services/user.service';
 import authService from '../services/auth.service';
 import localStorageService from '../services/localStorage.service';
 // Types
-import { AuthField, ErrorFields, Initial, Normalized, Tokens, User } from '../types/types';
+import { AuthField, ErrorFields, UsersInitial, Normalized, Tokens, User } from '../types/types';
 // Utils
 import { generateAuthError } from '../utils/generateAuthError';
 import { normalizeData } from '../utils/normalizeData';
 
-const initialState: Initial = localStorageService.getAccessToken()
+const initialState: UsersInitial = localStorageService.getAccessToken()
   ? {
       entities: null,
       isLoading: true,
@@ -38,7 +38,7 @@ const usersSlice = createSlice({
     usersRequested: (state) => {
       state.isLoading = true;
     },
-    usersReceived: (state, action: PayloadAction<Normalized>) => {
+    usersReceived: (state, action: PayloadAction<Normalized<User>>) => {
       state.entities = action.payload;
       state.isLoading = false;
     },

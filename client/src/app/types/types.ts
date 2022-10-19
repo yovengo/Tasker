@@ -26,16 +26,22 @@ export type LocalStorageFunc = string | null;
 export type ServicePromise<T> = Record<'content', T>;
 
 // usersReducer
-export type Initial = {
-  entities: Normalized | null;
+export type UsersInitial = {
+  entities: Normalized<User> | null;
   isLoading: boolean;
   error: string | null;
   auth: AuthField;
   isLoggedIn: boolean;
 };
 
-export type Normalized = {
-  byId: Record<string, User>;
+export type TasksInitial = {
+  entities: Normalized<Task> | null;
+  isLoading: boolean;
+  error: string | null;
+};
+
+export type Normalized<T> = {
+  byId: Record<string, T>;
   allIds: string[];
 };
 
