@@ -52,9 +52,17 @@ const tasksSlice = createSlice({
 });
 
 const { reducer: tasksReducer, actions } = tasksSlice;
-const { tasksRequested, tasksReceived, tasksRequestFailed, taskCreated, taskRemoved } = actions;
+const {
+  tasksRequested,
+  tasksReceived,
+  tasksRequestFailed,
+  taskCreated,
+  taskUpdateSucceed,
+  taskRemoved,
+} = actions;
 
 const addTaskRequested = createAction('tasks/addTaskRequested');
+const updateTaskRequested = createAction('tasks/updateTaskRequested');
 const removeTaskRequested = createAction('tasks/removeTaskRequested');
 
 export const loadTasksList = (userId: string) => async (dispatch: AppDispatch) => {
@@ -74,7 +82,17 @@ export const createTask = (payload: Partial<Task>) => async (dispatch: AppDispat
     const { content } = await taskService.createTask(payload);
     dispatch(taskCreated(content));
   } catch (error) {
-    dispatch(removeTaskRequested());
+    if (axios.isAxiosError(error)) dispatch(tasksRequestFailed(error.message));
+  }
+};
+
+export const updateTask = (payload: Task) => async (dispatch: AppDispatch) => {
+  dispatch(updateTaskRequested());
+  try {
+    const { content } = await taskService.updateTask(payload);
+    dispatch(taskUpdateSucceed(content));
+  } catch (error) {
+    if (axios.isAxiosError(error)) dispatch(tasksRequestFailed(error.message));
   }
 };
 
