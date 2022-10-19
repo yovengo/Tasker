@@ -96,4 +96,16 @@ export const updateTask = (payload: Task) => async (dispatch: AppDispatch) => {
   }
 };
 
+export const removeTask = (taskId: string) => async (dispatch: AppDispatch) => {
+  dispatch(removeTaskRequested());
+  try {
+    const { content } = await taskService.removeTask(taskId);
+    if (!content) {
+      dispatch(taskRemoved(taskId));
+    }
+  } catch (error) {
+    if (axios.isAxiosError(error)) dispatch(tasksRequestFailed(error.message));
+  }
+};
+
 export default tasksReducer;
