@@ -3,7 +3,6 @@ import { createAction, createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { AppDispatch, RootState } from './createStore';
 // Libraries
 import axios from 'axios';
-import { useNavigate } from 'react-router-dom';
 // Services
 import userService from '../services/user.service';
 import authService from '../services/auth.service';
@@ -13,6 +12,7 @@ import { AuthField, ErrorFields, UsersState, Normalized, Tokens, User } from '..
 // Utils
 import { generateAuthError } from '../utils/generateAuthError';
 import { normalizeData } from '../utils/normalizeData';
+import history from '../utils/history';
 
 const initialState: UsersState = localStorageService.getAccessToken()
   ? {
@@ -29,7 +29,6 @@ const initialState: UsersState = localStorageService.getAccessToken()
       auth: null,
       isLoggedIn: false,
     };
-const navigate = useNavigate();
 
 const usersSlice = createSlice({
   name: 'users',
@@ -90,7 +89,7 @@ export const signUp =
       const data: Awaited<Tokens> = await authService.register(payload);
       localStorageService.setTokens(data);
       dispatch(authRequestSuccess({ userId: data.userId }));
-      navigate('/');
+      history.push('/');
     } catch (error) {
       if (axios.isAxiosError(error)) dispatch(authRequestFailed(error.message));
     }
@@ -105,7 +104,7 @@ export const signIn =
       const data: Awaited<Tokens> = await authService.login({ email, password });
       localStorageService.setTokens(data);
       dispatch(authRequestSuccess({ userId: data.userId }));
-      navigate('/');
+      history.push('/');
     } catch (error) {
       if (axios.isAxiosError(error)) {
         const { code, message }: ErrorFields = error.response?.data.error;
@@ -126,7 +125,7 @@ export const updateUser =
     try {
       const { content } = await userService.update(payload);
       dispatch(userUpdateSucceed(content));
-      navigate('/');
+      history.push('/');
     } catch (error) {
       if (axios.isAxiosError(error)) dispatch(userUpdateFailed());
     }
@@ -135,7 +134,7 @@ export const updateUser =
 export const logOut = () => (dispatch: AppDispatch) => {
   localStorageService.removeAuthData();
   dispatch(userLoggedOut());
-  navigate('/');
+  history.push('/');
 };
 
 export const loadUsersList = () => async (dispatch: AppDispatch) => {
