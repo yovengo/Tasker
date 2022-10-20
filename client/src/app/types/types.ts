@@ -55,3 +55,8 @@ export type ErrorFields = { code: number; message: string };
 export type AppLoaderProps = {
   children: ReactNode;
 };
+
+export type ProtectedRouteProps = {
+  children: ReactNode;
+  redirectTo: string;
+};
