@@ -9,12 +9,12 @@ import userService from '../services/user.service';
 import authService from '../services/auth.service';
 import localStorageService from '../services/localStorage.service';
 // Types
-import { AuthField, ErrorFields, UsersInitial, Normalized, Tokens, User } from '../types/types';
+import { AuthField, ErrorFields, UsersState, Normalized, Tokens, User } from '../types/types';
 // Utils
 import { generateAuthError } from '../utils/generateAuthError';
 import { normalizeData } from '../utils/normalizeData';
 
-const initialState: UsersInitial = localStorageService.getAccessToken()
+const initialState: UsersState = localStorageService.getAccessToken()
   ? {
       entities: null,
       isLoading: true,

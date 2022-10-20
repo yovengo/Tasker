@@ -26,7 +26,7 @@ export type LocalStorageFunc = string | null;
 export type ServicePromise<T> = Record<'content', T>;
 
 // usersReducer
-export type UsersInitial = {
+export type UsersState = {
   entities: Normalized<User> | null;
   isLoading: boolean;
   error: string | null;
@@ -34,7 +34,7 @@ export type UsersInitial = {
   isLoggedIn: boolean;
 };
 
-export type TasksInitial = {
+export type TasksState = {
   entities: Normalized<Task> | null;
   isLoading: boolean;
   error: string | null;

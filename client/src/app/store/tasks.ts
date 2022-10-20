@@ -6,11 +6,11 @@ import axios from 'axios';
 // Services
 import taskService from '../services/task.service';
 // Types
-import { Normalized, Task, TasksInitial } from '../types/types';
+import { Normalized, Task, TasksState } from '../types/types';
 // Utils
 import { normalizeData } from '../utils/normalizeData';
 
-const initialState: TasksInitial = {
+const initialState: TasksState = {
   entities: null,
   isLoading: true,
   error: null,
