@@ -149,7 +149,8 @@ export const loadUsersList = () => async (dispatch: AppDispatch) => {
   }
 };
 
-export const getCurrentUser = () => (state: RootState) => state.users.entities;
+export const getCurrentUser = () => (state: RootState) => state.users.entities?.byId;
+export const getCurrentUserId = () => (state: RootState) => state.users.auth!.userId;
 export const getUsersLoadingStatus = () => (state: RootState) => state.users.isLoading;
 export const getIsLoggedIn = () => (state: RootState) => state.users.isLoggedIn;
 export const getAuthError = () => (state: RootState) => state.users.error;

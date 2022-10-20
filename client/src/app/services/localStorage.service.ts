@@ -25,8 +25,8 @@ export const getTokenExpiresDate = (): LocalStorageFunc => {
   return localStorage.getItem(EXPIRES_KEY);
 };
 
-export const getUserId = (): LocalStorageFunc => {
-  return localStorage.getItem(USERID_KEY);
+export const getUserId = (): string => {
+  return localStorage.getItem(USERID_KEY) || '';
 };
 
 export const removeAuthData = (): void => {

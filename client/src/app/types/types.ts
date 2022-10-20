@@ -1,3 +1,5 @@
+import { ReactNode } from 'react';
+
 // services
 export type User = {
   _id: string;
@@ -45,6 +47,11 @@ export type Normalized<T> = {
   allIds: string[];
 };
 
-export type AuthField = { userId: LocalStorageFunc } | null;
+export type AuthField = { userId: string } | null;
 
 export type ErrorFields = { code: number; message: string };
+
+// HOC
+export type AppLoaderProps = {
+  children: ReactNode;
+};
