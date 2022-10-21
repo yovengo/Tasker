@@ -6,8 +6,8 @@ import {
   getIsLoggedIn,
   getUsersLoadingStatus,
   loadUsersList,
-} from '../../../store/users';
-import { getTasksLoadingStatus, loadTasksList } from '../../../store/tasks';
+} from '../../../store/usersSlice';
+import { getTasksLoadingStatus, loadTasksList } from '../../../store/tasksSlice';
 
 const AppLoader = ({ children }: AppLoaderProps) => {
   const dispatch = useAppDispatch();
