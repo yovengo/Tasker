@@ -64,3 +64,9 @@ export type ProtectedRouteProps = {
 export type WrapperComponentProps = {
   children: ReactNode;
 };
+
+export type NavBarLogoProps = {
+  link: string;
+  src: string;
+  label: string;
+};
