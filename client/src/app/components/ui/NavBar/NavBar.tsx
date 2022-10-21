@@ -3,7 +3,7 @@ import { NavBarLinkList, NavBarLogo, NavBarWrapper } from './index';
 import StyledNavLink from '../../common/StyledNavLink';
 import { useAppSelector } from '../../../store/hook';
 import { getIsLoggedIn } from '../../../store/usersSlice';
-import ThemeSwitch from '../../common/ThemeSwitch';
+import NavBarThemeSwitch from './NavBarThemeSwitch';
 
 const NavBar = () => {
   const isLoggedIn = useAppSelector(getIsLoggedIn());
@@ -15,11 +15,11 @@ const NavBar = () => {
         {isLoggedIn ? (
           <>
             <StyledNavLink to="/about">About</StyledNavLink>
-            <ThemeSwitch />
+            <NavBarThemeSwitch />
           </>
         ) : (
           <>
-            <ThemeSwitch />
+            <NavBarThemeSwitch />
             <StyledNavLink to="/auth/signup" styleType="button">
               SignUp
             </StyledNavLink>

@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from 'react';
-import { ThemeName } from '../../types/types';
+import { ThemeName } from '../../../types/types';
 import { motion } from 'framer-motion';
 import { ComputerDesktopIcon, MoonIcon, SunIcon } from '@heroicons/react/24/outline';
 
-const ThemeSwitch = () => {
+const NavBarThemeSwitch = () => {
   const [theme, setTheme] = useState<ThemeName>(null);
   const [shown, setShown] = useState<boolean>(false);
 
@@ -99,4 +99,4 @@ const ThemeSwitch = () => {
     </motion.div>
   );
 };
-export default ThemeSwitch;
+export default NavBarThemeSwitch;
