@@ -60,3 +60,7 @@ export type ProtectedRouteProps = {
   children: ReactNode;
   redirectTo: string;
 };
+
+export type WrapperComponentProps = {
+  children: ReactNode;
+};
