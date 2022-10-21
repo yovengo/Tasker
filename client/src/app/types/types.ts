@@ -67,7 +67,6 @@ export type WrapperComponentProps = {
 
 export type NavBarLogoProps = {
   link: string;
-  src: string;
   label: string;
 };
 
