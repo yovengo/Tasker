@@ -4,6 +4,7 @@ import StyledNavLink from '../../common/StyledNavLink';
 import { useAppSelector } from '../../../store/hook';
 import { getIsLoggedIn } from '../../../store/usersSlice';
 import NavBarThemeSwitch from './NavBarThemeSwitch';
+import NavBarProfile from './NavBarProfile';
 
 const NavBar = () => {
   const isLoggedIn = useAppSelector(getIsLoggedIn());
@@ -14,8 +15,11 @@ const NavBar = () => {
       <NavBarLinkList>
         {isLoggedIn ? (
           <>
-            <StyledNavLink to="/about">About</StyledNavLink>
+            <StyledNavLink to="/about" className="border-r">
+              About
+            </StyledNavLink>
             <NavBarThemeSwitch />
+            <NavBarProfile />
           </>
         ) : (
           <>
