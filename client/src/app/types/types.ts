@@ -70,3 +70,13 @@ export type NavBarLogoProps = {
   src: string;
   label: string;
 };
+
+export type StyleType = 'default' | 'button' | 'underline' | 'withIcon';
+
+export type StyledNavLinkProps = {
+  children: string;
+  styleType?: StyleType;
+  className?: string;
+  to: string;
+  [key: string]: any;
+};
