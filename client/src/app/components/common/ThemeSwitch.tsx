@@ -60,7 +60,7 @@ const ThemeSwitch = () => {
         variants={showMenu}
         initial="exit"
         animate={shown ? 'enter' : 'exit'}
-        className="absolute left-36 mt-2 py-1 px-2 pr-10 text-slate-500 bg-white border border-opacity-50 rounded-lg"
+        className="absolute mt-3 py-1 px-2 pr-10 text-slate-500 bg-white border border-opacity-50 rounded-lg"
       >
         <motion.li
           whileHover={{
