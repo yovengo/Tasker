@@ -79,3 +79,5 @@ export type StyledNavLinkProps = {
   to: string;
   [key: string]: any;
 };
+
+export type ThemeName = 'light' | 'dark' | null;
