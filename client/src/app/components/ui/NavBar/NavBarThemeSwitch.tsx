@@ -2,16 +2,19 @@ import React, { useEffect, useState } from 'react';
 import { ThemeName } from '../../../types/types';
 import { motion } from 'framer-motion';
 import { ComputerDesktopIcon, MoonIcon, SunIcon } from '@heroicons/react/24/outline';
+import useLocalStorage from '../../../hooks/useLocalStorage';
 
 const NavBarThemeSwitch = () => {
-  const [theme, setTheme] = useState<ThemeName>(null);
+  const [theme, setTheme] = useLocalStorage<ThemeName>('theme', null);
   const [shown, setShown] = useState<boolean>(false);
 
   useEffect(() => {
-    if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
-      setTheme('dark');
-    } else {
-      setTheme('light');
+    if (theme === null) {
+      if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
+        setTheme('dark');
+      } else {
+        setTheme('light');
+      }
     }
   }, []);
 

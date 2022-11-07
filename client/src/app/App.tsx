@@ -1,7 +1,8 @@
 import React from 'react';
+import NavBar from './components/ui/NavBar/NavBar';
 
 function App() {
-  return <h1>Tasker</h1>;
+  return <NavBar />;
 }
 
 export default App;
