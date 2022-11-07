@@ -1,38 +1,11 @@
-import React, { useEffect, useState } from 'react';
-import { ThemeName } from '../../../types/types';
+import React, { useState } from 'react';
 import { motion } from 'framer-motion';
 import { ComputerDesktopIcon, MoonIcon, SunIcon } from '@heroicons/react/24/outline';
-import useLocalStorage from '../../../hooks/useLocalStorage';
+import useTheme from '../../../hooks/useTheme';
 
 const NavBarThemeSwitch = () => {
-  const [theme, setTheme] = useLocalStorage<ThemeName>('theme', null);
+  const [theme, setTheme] = useTheme();
   const [shown, setShown] = useState<boolean>(false);
-
-  useEffect(() => {
-    if (theme === null) {
-      if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
-        setTheme('dark');
-      } else {
-        setTheme('light');
-      }
-    }
-  }, []);
-
-  useEffect(() => {
-    if (theme === 'dark') {
-      document.documentElement.classList.add('dark');
-    } else {
-      document.documentElement.classList.remove('dark');
-    }
-
-    if (theme === null) {
-      if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
-        setTheme('dark');
-      } else {
-        setTheme('light');
-      }
-    }
-  }, [theme]);
 
   const showMenu = {
     enter: {
