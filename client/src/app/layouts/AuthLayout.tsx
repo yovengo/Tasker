@@ -1,3 +1,5 @@
+import React from 'react';
+import Card from '../components/common/Card';
 import { useAppSelector } from '../store/hook';
 import { getIsLoggedIn } from '../store/usersSlice';
 import { Navigate, Outlet } from 'react-router-dom';
@@ -11,7 +13,9 @@ const AuthLayout = () => {
 
   return (
     <div className="flex grow flex-col justify-center items-center">
-      <Outlet />
+      <Card>
+        <Outlet />
+      </Card>
     </div>
   );
 };

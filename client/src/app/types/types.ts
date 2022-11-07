@@ -81,3 +81,12 @@ export type StyledNavLinkProps = {
 };
 
 export type ThemeName = 'light' | 'dark' | null;
+
+export type CardProps = {
+  children: ReactNode;
+};
+
+export type CardTitleProps = {
+  children: ReactNode;
+  label: string;
+};
