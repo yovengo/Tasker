@@ -45,7 +45,7 @@ const TextField = ({ type, name, label, field, error, Icon }: TextFieldProps) =>
             )}
           </button>
         )}
-        {error ? <div className={errorStyle + 'text-end'}>{error}</div> : null}
+        {error ? <div className={errorStyle + 'text-end'}>{error.message}</div> : null}
       </div>
     </div>
   );

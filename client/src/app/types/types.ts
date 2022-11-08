@@ -96,7 +96,7 @@ export type TextFieldProps = {
   name: string;
   label: string;
   field: any;
-  error?: string;
+  error?: any;
   Icon?: any;
 };
 
