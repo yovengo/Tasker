@@ -107,6 +107,11 @@ export type SignUpFields = {
   password: string;
 };
 
+export type LoginProps = {
+  email: string;
+  password: string;
+};
+
 export type ButtonProps = {
   label?: string;
   children: ReactNode;

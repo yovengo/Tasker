@@ -4,6 +4,7 @@ import SignUpPage from './components/ui/SignUpPage';
 import { Navigate, Route, Routes } from 'react-router-dom';
 import MainPage from './components/page/MainPage';
 import AuthLayout from './layouts/AuthLayout';
+import LoginPage from './components/ui/LoginPage';
 
 function App() {
   return (
@@ -13,6 +14,7 @@ function App() {
         <Route index element={<MainPage />} />
         <Route path="auth" element={<AuthLayout />}>
           <Route index element={<Navigate to="/auth/signup" />} />
+          <Route path="login" element={<LoginPage />} />
           <Route path="signup" element={<SignUpPage />} />
           <Route path="*" element={<Navigate to="auth/signup" />} />
         </Route>
