@@ -88,7 +88,7 @@ export type CardProps = {
 
 export type CardTitleProps = {
   children: ReactNode;
-  label: string;
+  label?: string;
 };
 
 export type TextFieldProps = {
@@ -96,6 +96,17 @@ export type TextFieldProps = {
   name: string;
   label: string;
   field: any;
-  error: string;
+  error?: string;
   Icon?: any;
+};
+
+export type SignUpFields = {
+  email: string;
+  name: string;
+  password: string;
+};
+
+export type ButtonProps = {
+  label?: string;
+  children: ReactNode;
 };
