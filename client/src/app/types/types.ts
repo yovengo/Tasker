@@ -1,4 +1,5 @@
 import { ReactNode } from 'react';
+import { FieldError, FieldValues } from 'react-hook-form';
 
 // services
 export type User = {
@@ -95,8 +96,8 @@ export type TextFieldProps = {
   type?: string;
   name: string;
   label: string;
-  field: any;
-  error?: any;
+  field: FieldValues;
+  error?: FieldError;
   Icon?: any;
 };
 
