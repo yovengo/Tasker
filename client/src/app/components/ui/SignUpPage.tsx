@@ -31,7 +31,7 @@ const SignUpPage = () => {
     register,
     reset,
     handleSubmit,
-    formState: { errors },
+    formState: { errors, isValid },
   } = useForm<SignUpFields>({ mode: 'onBlur', resolver: yupResolver(schema) });
 
   const onSubmit: SubmitHandler<SignUpFields> = (data) => {
@@ -67,7 +67,7 @@ const SignUpPage = () => {
           Icon={KeyIcon}
         />
         <div className="pt-2">
-          <Button>{loading && <SpinLoading />} Sign Up</Button>
+          <Button isValid={isValid}>{loading && <SpinLoading />} Sign Up</Button>
         </div>
       </form>
       <p className="text-slate-600 text-sm">

@@ -110,4 +110,5 @@ export type SignUpFields = {
 export type ButtonProps = {
   label?: string;
   children: ReactNode;
+  isValid?: boolean;
 };
