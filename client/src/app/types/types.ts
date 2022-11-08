@@ -90,3 +90,12 @@ export type CardTitleProps = {
   children: ReactNode;
   label: string;
 };
+
+export type TextFieldProps = {
+  type?: string;
+  name: string;
+  label: string;
+  field: any;
+  error: string;
+  Icon?: any;
+};
