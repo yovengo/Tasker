@@ -25,7 +25,7 @@ const NavBar = () => {
           <>
             <NavBarThemeSwitch />
             <StyledNavLink to="/auth/signup" styleType="button">
-              SignUp
+              Sign Up
             </StyledNavLink>
           </>
         )}
