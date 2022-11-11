@@ -3,6 +3,7 @@ import Card from '../components/common/Card';
 import { useAppSelector } from '../store/hook';
 import { getIsLoggedIn } from '../store/usersSlice';
 import { Navigate, Outlet } from 'react-router-dom';
+import { motion } from 'framer-motion';
 
 const AuthLayout = () => {
   const isLoggedIn = useAppSelector(getIsLoggedIn());
@@ -12,11 +13,15 @@ const AuthLayout = () => {
   }
 
   return (
-    <div className="flex grow flex-col justify-center items-center bg-gradient-to-t from-blue-300 to-white dark:text-slate-200">
+    <motion.div
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      className="flex grow flex-col justify-center items-center bg-gradient-to-t from-blue-300 to-white dark:text-slate-200"
+    >
       <Card>
         <Outlet />
       </Card>
-    </div>
+    </motion.div>
   );
 };
 

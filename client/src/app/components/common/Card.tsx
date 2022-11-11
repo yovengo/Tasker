@@ -1,16 +1,17 @@
 import React from 'react';
 import { CardProps, CardTitleProps } from '../../types/types';
 import { motion } from 'framer-motion';
-import { useLocation } from 'react-router-dom';
+import TaskerLogo from '../../assets/img/TaskerLogo';
+import { NavLink } from 'react-router-dom';
 
 const pageVariants = {
   initial: {
     opacity: 0,
-    scale: 0.5,
+    y: -50,
   },
   in: {
     opacity: 1,
-    scale: 1,
+    y: 0,
   },
   out: {
     opacity: 0,
@@ -24,17 +25,19 @@ const pageTransition = {
 };
 
 const Card = ({ children }: CardProps) => {
-  const { pathname } = useLocation();
-
   return (
     <motion.div
-      key={pathname}
       initial="initial"
       animate="in"
       variants={pageVariants}
       transition={pageTransition}
-      className="bg-white rounded-lg overflow-hidden ring-1 ring-slate-900/5 shadow-xl p-8 mb-20 min-w-full xs:min-w-[400px] "
+      className="overflow-hidden p-8 min-w-full min-h-[557px] xs:min-w-[400px] "
     >
+      <div className="flex justify-center mb-6">
+        <NavLink to="/">
+          <TaskerLogo style="fill-gray-800 w-20 h-20" />
+        </NavLink>
+      </div>
       {children}
     </motion.div>
   );

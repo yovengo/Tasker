@@ -95,7 +95,8 @@ export type CardTitleProps = {
 export type TextFieldProps = {
   type?: string;
   name: string;
-  label: string;
+  label?: string;
+  placeholder?: string;
   field: FieldValues;
   error?: FieldError;
   Icon?: any;
@@ -116,4 +117,8 @@ export type ButtonProps = {
   label?: string;
   children: ReactNode;
   isValid?: boolean;
+};
+
+export type LogoProps = {
+  style: string;
 };

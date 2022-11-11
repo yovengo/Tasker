@@ -1,4 +1,3 @@
-import Card from '../common/Card';
 import TextField from '../common/form/TextField';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import { SignUpFields } from '../../types/types';
@@ -10,6 +9,7 @@ import { UserIcon, KeyIcon, EnvelopeIcon } from '@heroicons/react/24/outline';
 import StyledNavLink from '../common/StyledNavLink';
 import * as yup from 'yup';
 import { yupResolver } from '@hookform/resolvers/yup';
+import { motion } from 'framer-motion';
 
 const schema = yup.object({
   password: yup
@@ -25,6 +25,21 @@ const schema = yup.object({
   name: yup.string().required('Name is required'),
 });
 
+const container = {
+  hidden: { opacity: 0 },
+  show: {
+    opacity: 1,
+    transition: {
+      staggerChildren: 0.07,
+    },
+  },
+};
+
+const item = {
+  hidden: { opacity: 0 },
+  show: { opacity: 1 },
+};
+
 const SignUpPage = () => {
   const loading = useAppSelector(getUsersLoadingStatus());
   const {
@@ -32,7 +47,7 @@ const SignUpPage = () => {
     reset,
     handleSubmit,
     formState: { errors, isValid },
-  } = useForm<SignUpFields>({ mode: 'onBlur', resolver: yupResolver(schema) });
+  } = useForm<SignUpFields>({ mode: 'onChange', resolver: yupResolver(schema) });
 
   const onSubmit: SubmitHandler<SignUpFields> = (data) => {
     console.log(data);
@@ -40,43 +55,52 @@ const SignUpPage = () => {
   };
 
   return (
-    <>
-      <Card.Title>Sign Up</Card.Title>
-
-      <form onSubmit={handleSubmit(onSubmit)} className="space-y-6 min-w-[200px] w-full mb-10">
-        <TextField
-          field={{ ...register('name') }}
-          name="name"
-          label="Username"
-          error={errors?.name}
-          Icon={UserIcon}
-        />
-        <TextField
-          field={{ ...register('email') }}
-          name="email"
-          label="Email"
-          error={errors?.email}
-          Icon={EnvelopeIcon}
-        />
-        <TextField
-          field={{ ...register('password') }}
-          type="password"
-          name="password"
-          label="Password"
-          error={errors?.password}
-          Icon={KeyIcon}
-        />
-        <div className="pt-2">
+    <motion.div
+      variants={container}
+      initial="hidden"
+      animate="show"
+      className="flex flex-col items-center"
+    >
+      <form onSubmit={handleSubmit(onSubmit)} className="space-y-4 min-w-[200px] w-full mb-5">
+        <motion.div variants={item}>
+          <TextField
+            field={{ ...register('name') }}
+            name="name"
+            placeholder="Username"
+            error={errors?.name}
+            Icon={UserIcon}
+          />
+        </motion.div>
+        <motion.div variants={item}>
+          <TextField
+            field={{ ...register('email') }}
+            name="email"
+            placeholder="Email"
+            error={errors?.email}
+            Icon={EnvelopeIcon}
+          />
+        </motion.div>
+        <motion.div variants={item}>
+          <TextField
+            field={{ ...register('password') }}
+            type="password"
+            name="password"
+            placeholder="Password"
+            error={errors?.password}
+            Icon={KeyIcon}
+          />
+        </motion.div>
+        <motion.div variants={item} className="pt-2">
           <Button isValid={isValid}>{loading && <SpinLoading />} Sign Up</Button>
-        </div>
+        </motion.div>
       </form>
-      <p className="text-slate-600 text-sm">
+      <motion.p variants={item} className="text-slate-600 text-sm">
         <span> Already have account? </span>
         <StyledNavLink to="/auth/login" styleType="underline">
           Log In
         </StyledNavLink>
-      </p>
-    </>
+      </motion.p>
+    </motion.div>
   );
 };
 export default SignUpPage;

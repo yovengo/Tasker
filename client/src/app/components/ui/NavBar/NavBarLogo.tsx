@@ -9,7 +9,7 @@ const NavBarLogo = ({ link, label }: NavBarLogoProps) => {
       to={link}
       className="flex mr-3 flex-none overflow-hidden md:w-auto text-slate-200 items-center"
     >
-      <TaskerLogo />
+      <TaskerLogo style="fill-gray-800" />
       <span className="text-slate-800 mx-4 font-bold">{label}</span>
     </NavLink>
   );
